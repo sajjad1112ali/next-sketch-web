@@ -1,11 +1,14 @@
 import { NavLinks } from "@/constants";
+import { getCurrentUser } from "@/lib/session";
 import Image from "next/image";
 import Link from "next/link";
 import AuthProviders from "./AuthProviders";
 
-function Navbar() {
-    const session = {};
+const Navbar = async () => {
+    const session = await getCurrentUser();
   return (
+    <>
+    <pre>{JSON.stringify(session?.user || {'it': 'empty'})}</pre>
     <nav className="flexBetween navbar">
       <div className="flex-1 flexStart gap-10">
         <Link href={"/"}>
@@ -25,12 +28,15 @@ function Navbar() {
           ))}
         </ul>
       </div>
+      
       <div className="flexCenter gap-4">
         {
-            session ? (<>USER PHOTO </>) : (<AuthProviders />)
+
+            session?.user ? (<>{ session.user.image} </>) : (<AuthProviders />)
         }
       </div>
     </nav>
+    </>
   );
 }
 
