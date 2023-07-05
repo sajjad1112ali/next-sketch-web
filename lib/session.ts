@@ -5,6 +5,7 @@ import GoogleProvider from "next-auth/providers/google";
 import jsonwebtoken from "jsonwebtoken";
 import { JWT } from "next-auth/jwt";
 import { SessionInterface } from "@/common.types";
+import { createUser, getUserByEmail } from "./db/user";
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, JWT_SECRET } = process.env;
 
 console.log(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET);
@@ -34,12 +35,30 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async session({ session }) {
-      return session;
+      const email: string = session?.user?.email as string
+      try {
+        const data = await getUserByEmail(email)
+        const updatedSession = {
+          ...session,
+          user: {
+            ...session.user,
+            ...data,
+          }
+        }
+        return updatedSession;
+
+      } catch (error) {
+        console.log(`Error retrieving user data `, error)
+        return session;
+      }
     },
     async signIn({ user }: { user: AdapterUser | User }) {
+      const email: string = user?.email as string
       try {
-        // console.log("<<<<<<<<<user>>>>>>>>>");
-        // console.log(user);
+        const userExist = await getUserByEmail(email)
+        if (!userExist) {
+          const user = await createUser(email);
+        }
         return true;
       } catch (error: any) {
         return false;
@@ -51,10 +70,5 @@ export const authOptions: NextAuthOptions = {
 
 export async function getCurrentUser() {
   const session = (await getServerSession(authOptions)) as SessionInterface;
- 
- 
-
-  console.log('<<<<<<<<<<<<<<<<<<<<<<session>>>>>>>>>>>>>>>>>>>>>>')
-  console.log(session)
    return session;
 }
