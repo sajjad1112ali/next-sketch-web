@@ -30,6 +30,8 @@ const AuthProviders = () => {
         ))}
       </div>
     );
+  } else {
+    return null
   }
 };
 
