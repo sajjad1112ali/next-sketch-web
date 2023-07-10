@@ -3,6 +3,7 @@ import { SessionInterface } from "@/common.types";
 import { categoryFilters } from "@/constants";
 import Image from "next/image";
 import React, { ChangeEvent, useState } from "react";
+import Button from "./Button";
 import CategoriesDD from "./CategoriesDD";
 import FormField from "./FormField";
 
@@ -30,6 +31,9 @@ const SketchForm = ({ type, session }: Props) => {
   const handleStateChange = (fieldName: string, value: string) => {
     setform((prevState) => ({ ...prevState, [fieldName]: value }));
   };
+  const getButtonTitle = () => {
+   return isSubmitting ? `${type === 'create' ? 'Creating' : 'Editing'}` : `${type === 'create' ? 'Create' : 'Edit'}`
+  }
   const defaultForm = {
     image: "",
     title: "",
@@ -81,7 +85,12 @@ const SketchForm = ({ type, session }: Props) => {
         setState={(value) => handleStateChange("category", value)}
       />
       <div className="flexStart w-full">
-        <button>Create</button>
+        <Button 
+        title={getButtonTitle()}
+        type="submit"
+        leftIcon={isSubmitting ? '' : '/plus.svg'}
+        isSubmitting={isSubmitting}
+        />
       </div>
     </form>
   );
