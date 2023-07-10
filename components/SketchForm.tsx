@@ -2,7 +2,7 @@
 import { SessionInterface } from "@/common.types";
 import { categoryFilters } from "@/constants";
 import Image from "next/image";
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import CategoriesDD from "./CategoriesDD";
 import FormField from "./FormField";
 
@@ -13,13 +13,17 @@ type Props = {
 const SketchForm = ({ type, session }: Props) => {
   const handleFormSubmit = (e: React.FormEvent) => {};
   const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {};
-  const handleStateChange = (fieldName: string, value: string) => {};
-  const form = {
+  const handleStateChange = (fieldName: string, value: string) => {
+    setform((prevState) => ({ ...prevState, [fieldName]: value }));
+  };
+  const defaultForm = {
     image: "",
     title: "",
     description: "",
     category: "",
   };
+  const [form, setform] = useState(defaultForm);
+  const [isSubmitting, setisSubmitting] = useState(false);
   return (
     <form onSubmit={handleFormSubmit} className="flexStart form">
       <div className="flexStart form_image-container">
@@ -57,10 +61,10 @@ const SketchForm = ({ type, session }: Props) => {
         isTextArea={true}
       />
       <CategoriesDD
-        title='Category'
+        title="Category"
         state={form.category}
         filters={categoryFilters}
-        setState={(value) => handleStateChange('category', value)}
+        setState={(value) => handleStateChange("category", value)}
       />
       <div className="flexStart w-full">
         <button>Create</button>
