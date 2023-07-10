@@ -12,7 +12,21 @@ type Props = {
 };
 const SketchForm = ({ type, session }: Props) => {
   const handleFormSubmit = (e: React.FormEvent) => {};
-  const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {};
+  const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    const file = e.target.files?.[0]
+    if(!file) return
+    if(!file.type.includes('image')) {
+      return alert('Kindly upload an image file')
+    }
+    const reader = new FileReader()
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      const result = reader.result as string;
+      handleStateChange('image', result)
+    }
+  };
   const handleStateChange = (fieldName: string, value: string) => {
     setform((prevState) => ({ ...prevState, [fieldName]: value }));
   };
