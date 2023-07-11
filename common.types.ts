@@ -8,3 +8,10 @@ export interface SessionInterface extends Session {
     avatarUrl: string;
   };
 }
+
+export interface SketchForm {
+  title: string;
+  description: string;
+  image: string;
+  category: string;
+}

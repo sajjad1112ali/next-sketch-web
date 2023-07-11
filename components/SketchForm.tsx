@@ -1,7 +1,9 @@
 "use client";
 import { SessionInterface } from "@/common.types";
 import { categoryFilters } from "@/constants";
+import { createNewSketch } from "@/lib/db/sketch";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useState } from "react";
 import Button from "./Button";
 import CategoriesDD from "./CategoriesDD";
@@ -12,28 +14,44 @@ type Props = {
   session: SessionInterface;
 };
 const SketchForm = ({ type, session }: Props) => {
-  const handleFormSubmit = (e: React.FormEvent) => {};
-  const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
-    const file = e.target.files?.[0]
-    if(!file) return
-    if(!file.type.includes('image')) {
-      return alert('Kindly upload an image file')
+  const router = useRouter();
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setisSubmitting(true);
+    try {
+      if (type === "create") {
+        await createNewSketch(form, session?.user?.id, "Token");
+        router.push("/");
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setisSubmitting(false);
     }
-    const reader = new FileReader()
+  };
+  const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.includes("image")) {
+      return alert("Kindly upload an image file");
+    }
+    const reader = new FileReader();
     reader.readAsDataURL(file);
 
     reader.onload = () => {
       const result = reader.result as string;
-      handleStateChange('image', result)
-    }
+      handleStateChange("image", result);
+    };
   };
   const handleStateChange = (fieldName: string, value: string) => {
     setform((prevState) => ({ ...prevState, [fieldName]: value }));
   };
   const getButtonTitle = () => {
-   return isSubmitting ? `${type === 'create' ? 'Creating' : 'Editing'}` : `${type === 'create' ? 'Create' : 'Edit'}`
-  }
+    return isSubmitting
+      ? `${type === "create" ? "Creating" : "Editing"}`
+      : `${type === "create" ? "Create" : "Edit"}`;
+  };
   const defaultForm = {
     image: "",
     title: "",
@@ -85,11 +103,11 @@ const SketchForm = ({ type, session }: Props) => {
         setState={(value) => handleStateChange("category", value)}
       />
       <div className="flexStart w-full">
-        <Button 
-        title={getButtonTitle()}
-        type="submit"
-        leftIcon={isSubmitting ? '' : '/plus.svg'}
-        isSubmitting={isSubmitting}
+        <Button
+          title={getButtonTitle()}
+          type="submit"
+          leftIcon={isSubmitting ? "" : "/plus.svg"}
+          isSubmitting={isSubmitting}
         />
       </div>
     </form>
