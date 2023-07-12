@@ -15,3 +15,14 @@ export interface SketchForm {
   image: string;
   category: string;
 }
+
+export interface Sketch {
+  id: number;
+  userId: number;
+  title: string;
+  image: string;
+  description: string;
+  createdAt: Date;
+  category: string;
+  isActive: boolean;
+}
