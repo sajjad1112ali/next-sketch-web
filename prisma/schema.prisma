@@ -19,8 +19,9 @@ model Sketch {
   userId             Int
   user               User     @relation(fields: [userId], references: [id])
   title              String
+  image              String
   description        String   @db.Text
   createdAt          DateTime @default(now())
   category           String
-  isActive           Boolean  @default(false)
+  isActive           Boolean  @default(true)
 }

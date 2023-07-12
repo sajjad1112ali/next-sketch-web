@@ -1,11 +1,21 @@
 import { SketchForm } from "@/common.types";
-import prisma from "@/lib/db/prisma";
-
+const { NEXT_API_BASE_URL } = process.env;
 export const uploadImage = async (imagePath: string) => {
   try {
-    const response = await fetch("http://localhost:3000/api/upload", {
+    const response = await fetch(`${NEXT_API_BASE_URL}/api/upload`, {
       method: "POST",
       body: JSON.stringify({ path: imagePath }),
+    });
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+export const saveSketchToDb = async (data: any) => {
+  try {
+    const response = await fetch(`${NEXT_API_BASE_URL}/api/sketch`, {
+      method: "POST",
+      body: JSON.stringify({ data }),
     });
     return response.json();
   } catch (error) {
@@ -18,10 +28,15 @@ export const createNewSketch = async (
   token: string
 ) => {
   const imageUrl = await uploadImage(form.image);
-  
-  if (imageUrl.url) {
 
-    return 'Sketch save successfully'
+  if (imageUrl.url) {
+    const data = {
+      ...form,
+      image: imageUrl.url,
+      userId: creatorId,
+    };
+    const sketch = await saveSketchToDb(data);
+    return "Sketch save successfully";
   }
-  return 'Sketch save successfully'
+  return "Sketch save successfully";
 };

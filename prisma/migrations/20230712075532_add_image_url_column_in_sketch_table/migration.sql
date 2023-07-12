@@ -3,6 +3,7 @@ CREATE TABLE `Sketch` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` INTEGER NOT NULL,
     `title` VARCHAR(191) NOT NULL,
+    `image` VARCHAR(191) NOT NULL,
     `description` TEXT NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `category` VARCHAR(191) NOT NULL,
