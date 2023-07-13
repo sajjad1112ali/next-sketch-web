@@ -25,7 +25,7 @@ const Button = ({
     <button
       type={type || "button"}
       disabled={isSubmitting}
-      className={`flexCenter px-4 py-3 gap-4 ${textColor || 'text-white'} ${
+      className={`flexCenter px-4 py-3 gap-4 ${textColor || "text-white"} ${
         isSubmitting ? "bg-black/50" : bgColor || "bg-primary-purple"
       } rounded-xl text-sm font-medium max:md:w-full`}
       onClick={handleClick}

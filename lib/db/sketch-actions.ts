@@ -13,7 +13,7 @@ export const getSketheDetails = async (id: string) => {
   return sketch;
 };
 
-export const getUserProjects = async (userId: number) => {
+export const getUserSketchs = async (userId: number) => {
   const sketch = await prisma.sketch.findMany({
     where: {
       userId,

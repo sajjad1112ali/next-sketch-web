@@ -7,10 +7,10 @@ import { useRouter } from "next/navigation";
 const { NEXT_API_BASE_URL } = process.env;
 
 type Props = {
-  projectId: number;
+  sketchId: number;
 };
 
-const ProjectActions = ({ projectId }: Props) => {
+const SketchActions = ({ sketchId }: Props) => {
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const router = useRouter();
   const deleteSketch = async (id: number) => {
@@ -20,11 +20,11 @@ const ProjectActions = ({ projectId }: Props) => {
     return response.json();
   };
 
-  const handleDeleteProject = async () => {
+  const handleDeleteSketch = async () => {
     setIsDeleting(true);
 
     try {
-      await deleteSketch(projectId);
+      await deleteSketch(sketchId);
 
       router.push("/");
     } catch (error) {
@@ -37,7 +37,7 @@ const ProjectActions = ({ projectId }: Props) => {
   return (
     <>
       <Link
-        href={`/edit-project/${projectId}`}
+        href={`/edit-project/${sketchId}`}
         className="flexCenter edit-action_btn"
       >
         <Image src="/pencile.svg" width={15} height={15} alt="edit" />
@@ -49,7 +49,7 @@ const ProjectActions = ({ projectId }: Props) => {
         className={`flexCenter delete-action_btn ${
           isDeleting ? "bg-gray" : "bg-primary-purple"
         }`}
-        onClick={handleDeleteProject}
+        onClick={handleDeleteSketch}
       >
         <Image src="/trash.svg" width={15} height={15} alt="delete" />
       </button>
@@ -57,4 +57,4 @@ const ProjectActions = ({ projectId }: Props) => {
   );
 };
 
-export default ProjectActions;
+export default SketchActions;

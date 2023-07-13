@@ -28,13 +28,14 @@ const FormField = ({
           onChange={(e) => setState(e.target.value)}
         />
       ) : (
-        <input 
-        type={type || 'text'}
-        placeholder={placeHolder}
-        value={state}
-        required
-        className="form_field-input"
-        onChange={(e) => setState(e.target.value)}/>
+        <input
+          type={type || "text"}
+          placeholder={placeHolder}
+          value={state}
+          required
+          className="form_field-input"
+          onChange={(e) => setState(e.target.value)}
+        />
       )}
     </div>
   );

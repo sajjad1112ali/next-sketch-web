@@ -27,12 +27,14 @@ const AuthProviders = () => {
     return (
       <div>
         {Object.values(providers).map((provider: Provider, id) => (
-          <button key={id} onClick={() => signIn(provider?.id)}>{provider.id}</button>
+          <button key={id} onClick={() => signIn(provider?.id)}>
+            {provider.id}
+          </button>
         ))}
       </div>
     );
   } else {
-    return null
+    return null;
   }
 };
 
