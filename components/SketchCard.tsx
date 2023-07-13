@@ -16,7 +16,7 @@ const SketchCard = ({ sketch }: { sketch: Sketch }) => {
   const userImage = '/user-image.svg'
   const name = 'Sajjad Ali'
   return <div className="flexCenter flex-col rounded-2xl drop-shadow-card">
-    <Link href={`/profile/${userId}`} className='flexCenter group relative w-full h-full'>
+    <Link href={`/sketch/${id}`} className='flexCenter group relative w-full h-full'>
         <Image src={image} alt={title} width={414} height={314} className='w-full h-full rounded-2xl object-contain' />
         <div className="hidden group-hover:flex profile_card-title"><p className="w-full">{title}</p></div>
     </Link>
