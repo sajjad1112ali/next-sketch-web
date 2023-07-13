@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Modal from "@/components/Modal";
 import RelatedProjects from "@/components/RelatedProjects";
+import ProjectActions from "@/components/ProjectActions";
 
 const SketchDetails = async ({
   params: { id },
@@ -47,12 +48,11 @@ const SketchDetails = async ({
                 </div>
             </div>
         </div>
-
-        {/* {session?.user?.email === sketchData?.createdBy?.email && (
+        {+session?.user?.id === sketchData?.userId && (
             <div className="flex justify-end items-center gap-2">
                 <ProjectActions projectId={sketchData?.id} />
             </div>
-        )} */}
+        )}
     </section>
 
     <section className="mt-14">
