@@ -3,15 +3,15 @@ import SketchForm from "@/components/SketchForm";
 import { getCurrentUser } from "@/lib/session";
 import { redirect } from "next/navigation";
 
-const createSketch = async () => {
+const EditSketch = async () => {
   const session = await getCurrentUser();
   if (!session?.user) redirect("/");
   return (
     <Modal>
-      <h3 className="modal-head-text">Create a new sketch</h3>
-      <SketchForm type="create" session={session} />
+      <h3 className="modal-head-text">Edit sketch</h3>
+      <SketchForm type="edit" session={session} />
     </Modal>
   );
 };
 
-export default createSketch;
+export default EditSketch;

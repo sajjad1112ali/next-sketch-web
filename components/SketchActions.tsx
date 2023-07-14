@@ -37,7 +37,7 @@ const SketchActions = ({ sketchId }: Props) => {
   return (
     <>
       <Link
-        href={`/edit-project/${sketchId}`}
+        href={`/edit-sketch/${sketchId}`}
         className="flexCenter edit-action_btn"
       >
         <Image src="/pencile.svg" width={15} height={15} alt="edit" />

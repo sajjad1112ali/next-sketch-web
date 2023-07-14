@@ -30,10 +30,10 @@ const Button = ({
       } rounded-xl text-sm font-medium max:md:w-full`}
       onClick={handleClick}
     >
-      {leftIcon && <Image src={leftIcon} width={20} height={20} alt="Lef" />}
+      {leftIcon && <Image src={leftIcon} width={20} height={20} alt="Left icon" />}
       {title}
       {rightIcon && (
-        <Image src={rightIcon} width={20} height={20} alt="RIght" />
+        <Image src={rightIcon} width={20} height={20} alt="Right icon" />
       )}
     </button>
   );
