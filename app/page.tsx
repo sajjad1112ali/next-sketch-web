@@ -4,13 +4,18 @@ import { getSkethes } from "@/lib/db/sketch-actions";
 import SketchCard from "@/components/SketchCard";
 import { Sketch } from "@/common.types";
 import Categories from "@/components/Categories";
-
-const Home = async () => {
-  const sketeches = await getSkethes();
+type SearchParams = {
+  category?: string | null;
+}
+type Props = {
+  searchParams: SearchParams;
+}
+const Home = async ({ searchParams: { category }}: Props) => {
+  const sketeches = await getSkethes(category);
   if (sketeches.length === 0) {
     return (
-      <section>
-        <h1>Categories</h1>
+      <section className="flex-start flex-col paddings mb-16">
+        <Categories />
         <p className="no-result-text text-center">Sketches not found!</p>
       </section>
     );

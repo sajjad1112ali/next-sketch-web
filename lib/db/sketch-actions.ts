@@ -1,6 +1,15 @@
 import prisma from "@/lib/db/prisma";
-export const getSkethes = async () => {
-  const sketches = await prisma.sketch.findMany();
+export const getSkethes = async (category:  string | null | undefined) => {
+  let query = {};
+
+  if (category) {
+    query = {
+      where: {
+        category: category,
+      },
+    };
+  }
+  const sketches = await prisma.sketch.findMany(query);
   return sketches;
 };
 
