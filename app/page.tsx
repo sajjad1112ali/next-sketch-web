@@ -3,6 +3,7 @@ import React from "react";
 import { getSkethes } from "@/lib/db/sketch-actions";
 import SketchCard from "@/components/SketchCard";
 import { Sketch } from "@/common.types";
+import Categories from "@/components/Categories";
 
 const Home = async () => {
   const sketeches = await getSkethes();
@@ -16,7 +17,7 @@ const Home = async () => {
   }
   return (
     <section className="flex-start flex-col paddings mb-16">
-      <h1>Categories</h1>
+      <Categories />
       <section className="sketchs-grid">
         {sketeches.map((sk: Sketch) => (
           <SketchCard key={sk.id} sketch={sk} />
