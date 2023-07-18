@@ -7,3 +7,7 @@ export function getQSParamFromURL(
   const urlParams = new URLSearchParams(search);
   return urlParams.get(key);
 }
+export function isBase64DataURL(str: string) {
+  const base64DataURLRegex = /^data:[a-z]+\/[a-z]+;base64,/i;
+  return base64DataURLRegex.test(str);
+}

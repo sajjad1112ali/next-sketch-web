@@ -9,6 +9,15 @@ cloudinary.config({
   api_secret: CLOUDINARY_SECRET,
 });
 export async function POST(request: Request) {
+
+  console.log('>>>>------------------------------>>>>')
+  console.log('>>>>------------------------------>>>>')
+  console.log('>>>>------------------------------>>>>')
+  console.log('>>>>------------------------------>>>>')
+  console.log('>>>>------------------------------>>>>')
+  console.log('>>>>------------------------------>>>>')
+  console.log('>>>>------------------------------>>>>')
+  console.log('>>>>------------------------------>>>>')
   const { path } = await request.json();
   if (!path) {
     return NextResponse.json(
@@ -18,6 +27,7 @@ export async function POST(request: Request) {
   }
 
   try {
+    
     const options = {
       use_filename: true,
       unique_filename: false,
@@ -30,6 +40,10 @@ export async function POST(request: Request) {
       { status: 200 }
     );
   } catch (error) {
+
+  console.log('>>>><<<<< ------------------------------>>>>>>>>>')
+  console.log(CLOUDINARY_NAME, CLOUDINARY_KEY, CLOUDINARY_SECRET)
+  console.log('>>>><<<<<------------------------------>>>>>>>>>')
     return NextResponse.json(
       { message: "Error!" },
       { status: 400 }

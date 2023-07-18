@@ -35,3 +35,18 @@ export async function GET(request: Request) {
     return NextResponse.json({ message: "Error!" }, { status: 400 });
   }
 }
+
+export async function PUT(request: Request) {
+  const { data, sketchId} = await request.json();
+  try {
+    const sketch = await prisma.sketch.update({
+      where: {
+        id: sketchId,
+      },
+      data,
+    });
+    return NextResponse.json(sketch, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ message: "Error!" }, { status: 400 });
+  }
+}

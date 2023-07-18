@@ -1,7 +1,7 @@
 "use client";
-import { SessionInterface } from "@/common.types";
+import { SessionInterface, Sketch } from "@/common.types";
 import { categoryFilters } from "@/constants";
-import { createNewSketch } from "@/lib/db/sketch";
+import { createNewSketch, editSketch } from "@/lib/db/sketch";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useState } from "react";
@@ -12,8 +12,9 @@ import FormField from "./FormField";
 type Props = {
   type: string;
   session: SessionInterface;
+  sketch?: Sketch;
 };
-const SketchForm = ({ type, session }: Props) => {
+const SketchForm = ({ type, session, sketch }: Props) => {
   const router = useRouter();
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,6 +22,11 @@ const SketchForm = ({ type, session }: Props) => {
     try {
       if (type === "create") {
         await createNewSketch(form, session?.user?.id, "Token");
+        router.push("/");
+      }
+      if (type === "edit") {
+
+        await editSketch(form, sketch?.id!, "Token");
         router.push("/");
       }
     } catch (error) {
@@ -53,10 +59,10 @@ const SketchForm = ({ type, session }: Props) => {
       : `${type === "create" ? "Create" : "Edit"}`;
   };
   const defaultForm = {
-    image: "",
-    title: "",
-    description: "",
-    category: "",
+    image: sketch?.image || "",
+    title: sketch?.title || "",
+    description: sketch?.description || "",
+    category: sketch?.category || "",
   };
   const [form, setform] = useState(defaultForm);
   const [isSubmitting, setisSubmitting] = useState(false);
