@@ -2,6 +2,20 @@ import { Sketch } from "@/common.types";
 import Image from "next/image";
 import Link from "next/link";
 
+function generateRandomLikesAndViews() {
+    const minLikes = 10; // Minimum number of likes
+    const maxLikes = 200; // Maximum number of likes
+    const minViews = 1000; // Minimum number of views
+    const maxViews = 10000; // Maximum number of views
+  
+    const randomLikes = Math.floor(Math.random() * (maxLikes - minLikes + 1)) + minLikes;
+    const randomViews = (Math.floor(Math.random() * (maxViews - minViews + 1)) + minViews) / 1000;
+  
+    return {
+      likes: randomLikes,
+      views: `${randomViews}k`,
+    };
+  }
 const SketchCard = ({ sketch }: { sketch: Sketch }) => {
   const {
     id,
@@ -13,6 +27,8 @@ const SketchCard = ({ sketch }: { sketch: Sketch }) => {
     category,
     isActive,
   } = sketch;
+  const { likes, views } = generateRandomLikesAndViews();
+
   const userImage = '/user-image.svg'
   const name = 'Sajjad Ali'
   return <div className="flexCenter flex-col rounded-2xl drop-shadow-card">
@@ -29,12 +45,12 @@ const SketchCard = ({ sketch }: { sketch: Sketch }) => {
         </Link>
         <div className="flexCenter gap-3">
             <div className="flexCenter gap-2">
-                <Image src={`heart.svg`} width={13} height={12} alt="heart" />
-                <p className="text-sm">2525</p>
+                <Image src={`/heart.svg`} width={13} height={12} alt="heart" />
+                <p className="text-sm">{likes}</p>
             </div>
             <div className="flexCenter gap-2">
-                <Image src={`eye.svg`} width={13} height={12} alt="heart" />
-                <p className="text-sm">5.3k</p>
+                <Image src={`/eye.svg`} width={13} height={12} alt="heart" />
+                <p className="text-sm">{views}</p>
             </div>
         </div>
     </div>
